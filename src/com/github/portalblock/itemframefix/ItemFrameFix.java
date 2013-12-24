@@ -32,7 +32,7 @@ public class ItemFrameFix extends JavaPlugin implements Listener {
                     }else
                     if(ev.getDamager() instanceof Player){
                         Player p = (Player) ev.getDamager();
-                        if(p.getGameMode() == GameMode.CREATIVE||p.hasPermission("itemframefix.break")){}else{
+                        if(p.getGameMode() == GameMode.CREATIVE&&p.hasPermission("itemframefix.break")){}else{
                             e.setCancelled(true);
                         }
                     }
