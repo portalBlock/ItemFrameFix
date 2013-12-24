@@ -1,5 +1,6 @@
 package com.github.portalblock;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -15,22 +16,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class ItemFrameFix extends JavaPlugin implements Listener {
     @Override
     public void onEnable(){
-        getServer().getPluginManager().registerEvents(this, this);
+        Bukkit.getPluginManager().registerEvents(this, this);
         getLogger().info("ItemFrameFix has been enabled!");
     }
 
     @EventHandler
     public void hBE(EntityDamageByEntityEvent e){
+       Bukkit.broadcastMessage("Event Fired!");
        Entity en = e.getEntity();
        if(en instanceof Player){
            Player p = (Player)en;
            if(p.getGameMode() != GameMode.CREATIVE){
                 e.setCancelled(true);
            }else{
-               getServer().broadcastMessage("You are not in creative");
+               Bukkit.broadcastMessage("You are not in creative");
            }
        }else{
-           getServer().broadcastMessage("You are not a player!");
+           Bukkit.broadcastMessage("You are not a player!");
        }
     }
 }
