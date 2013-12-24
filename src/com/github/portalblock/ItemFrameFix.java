@@ -26,7 +26,11 @@ public class ItemFrameFix extends JavaPlugin implements Listener {
            Player p = (Player)en;
            if(p.getGameMode() != GameMode.CREATIVE){
                 e.setCancelled(true);
+           }else{
+               getServer().broadcastMessage("You are not in creative");
            }
+       }else{
+           getServer().broadcastMessage("You are not a player!");
        }
     }
 }
