@@ -20,14 +20,16 @@ public class ItemFrameFix extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(this, this);
         getLogger().info("ItemFrameFix has been enabled!");
     }
-
     @EventHandler
     public void hBE(EntityDamageEvent e){
-        if(e instanceof EntityDamageByEntityEvent){
+         if(e instanceof EntityDamageByEntityEvent){
             EntityDamageByEntityEvent ev = (EntityDamageByEntityEvent)e;
             if(ev.getEntity() instanceof Entity){
                 Entity damagee = (Entity)ev.getEntity();
                 if(damagee instanceof ItemFrame){
+                    if(e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE){
+                        e.setCancelled(true);
+                    }else
                     if(ev.getDamager() instanceof Player){
                         Player p = (Player) ev.getDamager();
                         if(p.getGameMode() != GameMode.CREATIVE||!p.hasPermission("itemframefix.break")){
