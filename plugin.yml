@@ -1,0 +1,7 @@
+name: ItemFrameFix
+main: com.github.portalblock.itemframefix.ItemFrameFix
+version: 1.3
+permissions:
+  itemframefix.break:
+   description: Allows you to break itemframes.
+   default: false
