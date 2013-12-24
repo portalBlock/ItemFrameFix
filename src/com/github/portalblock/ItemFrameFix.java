@@ -3,11 +3,12 @@ package com.github.portalblock;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -21,18 +22,20 @@ public class ItemFrameFix extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void hBE(EntityDamageByEntityEvent e){
-       Bukkit.broadcastMessage("Event Fired!");
-       Entity en = e.getEntity();
-       if(en instanceof Player){
-           Player p = (Player)en;
-           if(p.getGameMode() != GameMode.CREATIVE){
-                e.setCancelled(true);
-           }else{
-               Bukkit.broadcastMessage("You are not in creative");
-           }
-       }else{
-           Bukkit.broadcastMessage("You are not a player!");
-       }
+    public void hBE(EntityDamageEvent e){
+        if(e instanceof EntityDamageByEntityEvent){
+            EntityDamageByEntityEvent ev = (EntityDamageByEntityEvent)e;
+            if(ev.getEntity() instanceof Entity){
+                Entity damagee = (Entity)ev.getEntity();
+                if(damagee instanceof ItemFrame){
+                    if(ev.getDamager() instanceof Player){
+                        Player p = (Player) ev.getDamager();
+                        if(p.getGameMode() != GameMode.CREATIVE||!p.hasPermission("itemframefix.break")){
+                            e.setCancelled(true);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
